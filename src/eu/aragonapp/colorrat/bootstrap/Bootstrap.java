@@ -1,4 +1,4 @@
-package eu.aragonapp.client;
+package eu.aragonapp.colorrat.bootstrap;
 
 /**
  * @Copyright (c) 2018 Mythic Inc. (http://www.mythic.com/) All Rights Reserved.
@@ -9,7 +9,7 @@ package eu.aragonapp.client;
  * You may obtain a copy of the License at
  * @https://www.apache.org/licenses/LICENSE-2.0
  */
-public class Main {
+public class Bootstrap {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
