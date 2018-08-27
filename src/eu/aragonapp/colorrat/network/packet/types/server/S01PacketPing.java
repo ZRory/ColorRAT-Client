@@ -14,6 +14,8 @@ import eu.aragonapp.colorrat.network.packet.Packet;
  */
 public class S01PacketPing extends Packet {
 
+    private final long serialVersionUID = 1L;
+
     @Override
     public void execute(NetworkConnection connection) {
     }

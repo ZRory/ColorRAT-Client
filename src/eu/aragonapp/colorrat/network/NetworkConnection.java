@@ -13,6 +13,6 @@ import java.io.Serializable;
  */
 public class NetworkConnection implements Serializable {
 
-
+    private long serialVersionUID = 1L;
 
 }

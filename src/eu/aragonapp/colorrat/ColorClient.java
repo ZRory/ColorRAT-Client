@@ -35,6 +35,16 @@ public class ColorClient {
 
         this.connectThread = new ConnectThread();
         this.connectThread.start();
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            try {
+                this.socket.close();
+                this.outputStream.close();
+                this.inputStream.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }));
     }
 
     public boolean write(Packet packet) {
@@ -43,6 +53,7 @@ public class ColorClient {
         try {
             this.outputStream.writeObject(packet);
             this.outputStream.flush();
+            System.out.println("Written");
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -53,19 +64,14 @@ public class ColorClient {
     public void stop() {
         try {
             if (this.outputStream != null) this.outputStream.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        try {
             if (this.inputStream != null) this.inputStream.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        try {
             if (this.socket != null) this.socket.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+
+        if (this.receiveThread != null)
+            this.receiveThread.close();
 
         this.outputStream = null;
         this.inputStream = null;
@@ -98,12 +104,12 @@ public class ColorClient {
         return receiveThread;
     }
 
-    public static ColorClient getInstance() {
-        return instance;
-    }
-
     public void setSocket(Socket socket) {
         this.socket = socket;
+    }
+
+    public static ColorClient getInstance() {
+        return instance;
     }
 
     public boolean isConnected() {
