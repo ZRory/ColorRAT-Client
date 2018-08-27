@@ -5,6 +5,7 @@ import eu.aragonapp.colorrat.network.packet.Packet;
 import eu.aragonapp.colorrat.network.thread.ColorThread;
 
 import java.io.EOFException;
+import java.io.IOException;
 import java.net.SocketException;
 
 /**
@@ -25,14 +26,16 @@ public class ReceiveThread extends ColorThread {
     @Override
     public void update() {
         try {
-            final Object object = ColorClient.getInstance().readObject();
+            final Object object = ColorClient.getInstance().getInputStream().readObject();
+
+            if (object == null) return;
             if (!(object instanceof Packet)) return;
 
             ((Packet) object).execute(null);
-        } catch (SocketException | EOFException ex) {
+        } catch (SocketException | NullPointerException | EOFException ex) {
             ColorClient.getInstance().stop();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (ClassNotFoundException | IOException e) {
+            e.printStackTrace();
         }
     }
 }

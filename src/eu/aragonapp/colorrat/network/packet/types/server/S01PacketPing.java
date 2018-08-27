@@ -15,6 +15,7 @@ import eu.aragonapp.colorrat.network.packet.Packet;
 public class S01PacketPing extends Packet {
 
     @Override
-    public void execute(NetworkConnection connection) { }
+    public void execute(NetworkConnection connection) {
+    }
 
 }

@@ -61,7 +61,6 @@ public class ConnectThread extends ColorThread {
             ColorClient.getInstance().setConnected(true);
             return true;
         } catch (Exception ex) {
-            ex.printStackTrace();
             ColorClient.getInstance().setConnected(false);
             return false;
         }

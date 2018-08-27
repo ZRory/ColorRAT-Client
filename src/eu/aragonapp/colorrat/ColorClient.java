@@ -38,7 +38,7 @@ public class ColorClient {
     }
 
     public boolean write(Packet packet) {
-        if(this.outputStream == null) throw new NullPointerException("Output Stream is null!");
+        if (this.outputStream == null) throw new NullPointerException("Output Stream is null!");
 
         try {
             this.outputStream.writeObject(packet);
@@ -50,20 +50,26 @@ public class ColorClient {
         }
     }
 
-    public Object readObject() throws Exception {
-        if(this.inputStream == null) throw new NullPointerException("Input Stream is null!");
-
-        return this.inputStream.readObject();
-    }
-
     public void stop() {
         try {
-            if(this.outputStream != null) this.outputStream.close();
-            if(this.inputStream != null) this.inputStream.close();
-            if(this.socket != null) this.socket.close();
+            if (this.outputStream != null) this.outputStream.close();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        try {
+            if (this.inputStream != null) this.inputStream.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        try {
+            if (this.socket != null) this.socket.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        this.outputStream = null;
+        this.inputStream = null;
+        this.socket = null;
 
         this.setConnected(false);
     }
@@ -82,6 +88,10 @@ public class ColorClient {
 
     public void setConnected(boolean connected) {
         this.connected = connected;
+    }
+
+    public ObjectInputStream getInputStream() {
+        return inputStream;
     }
 
     public ReceiveThread getReceiveThread() {

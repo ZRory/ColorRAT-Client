@@ -1,5 +1,7 @@
 package eu.aragonapp.colorrat.bootstrap;
 
+import eu.aragonapp.colorrat.ColorClient;
+
 /**
  * @Copyright (c) 2018 Mythic Inc. (http://www.mythic.com/) All Rights Reserved.
  * <p>
@@ -12,7 +14,7 @@ package eu.aragonapp.colorrat.bootstrap;
 public class Bootstrap {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        new ColorClient();
     }
 
 }
