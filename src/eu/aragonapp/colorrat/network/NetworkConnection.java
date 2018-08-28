@@ -11,8 +11,4 @@ import java.io.Serializable;
  * You may obtain a copy of the License at
  * @https://www.apache.org/licenses/LICENSE-2.0
  */
-public class NetworkConnection implements Serializable {
-
-    private long serialVersionUID = 1L;
-
-}
+public class NetworkConnection implements Serializable { }

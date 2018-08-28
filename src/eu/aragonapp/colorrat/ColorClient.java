@@ -30,7 +30,11 @@ public class ColorClient {
     private boolean connected;
     private Socket socket;
 
+    private String address;
+    private int port;
+
     public ColorClient() {
+        setInformations();
         instance = this;
 
         this.connectThread = new ConnectThread();
@@ -47,13 +51,16 @@ public class ColorClient {
         }));
     }
 
+    public void setInformations() {
+
+    }
+
     public boolean write(Packet packet) {
-        if (this.outputStream == null) throw new NullPointerException("Output Stream is null!");
+        if (this.outputStream == null) return false;
 
         try {
             this.outputStream.writeObject(packet);
             this.outputStream.flush();
-            System.out.println("Written");
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -72,10 +79,6 @@ public class ColorClient {
 
         if (this.receiveThread != null)
             this.receiveThread.close();
-
-        this.outputStream = null;
-        this.inputStream = null;
-        this.socket = null;
 
         this.setConnected(false);
     }
@@ -112,12 +115,20 @@ public class ColorClient {
         return instance;
     }
 
+    public String getAddress() {
+        return this.address;
+    }
+    
     public boolean isConnected() {
         return connected;
     }
 
     public Socket getSocket() {
         return socket;
+    }
+
+    public int getPort() {
+        return this.port;
     }
 
 }

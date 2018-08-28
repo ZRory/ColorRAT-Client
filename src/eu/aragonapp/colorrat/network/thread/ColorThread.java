@@ -14,7 +14,7 @@ public abstract class ColorThread extends Thread {
     public ColorThread(String name) {
         super(name);
 
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> this.close()));
+        Runtime.getRuntime().addShutdownHook(new Thread(this::close));
     }
 
     @Override
