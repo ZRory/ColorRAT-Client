@@ -48,7 +48,7 @@ public class ConnectThread extends ColorThread {
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            this.close();
         }
     }
 
